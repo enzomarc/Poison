@@ -1,0 +1,18 @@
+{
+    "name": "focus237/poison",
+    "description": "PHP Template Engine",
+    "type": "library",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "focus237",
+            "email": "emarc237@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Poison\\": "src"
+        }
+    },
+    "require": {}
+}
