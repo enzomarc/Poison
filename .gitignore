@@ -16,4 +16,5 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 
-/.idea/
+.idea/
+.idea/workspace.xml
