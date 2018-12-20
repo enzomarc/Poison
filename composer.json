@@ -2,7 +2,7 @@
     "name": "focus237/poison",
     "description": "PHP Template Engine",
     "type": "library",
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "focus237",
@@ -14,5 +14,7 @@
             "Poison\\": "src"
         }
     },
-    "require": {}
+    "require": {
+        "php": "7.*"
+    }
 }
