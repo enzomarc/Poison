@@ -2,6 +2,8 @@
 
 namespace App;
 
+require_once 'helpers.php';
+
 class Poison
 {
 
@@ -10,6 +12,14 @@ class Poison
     private static $cachePath;
 
     private static $viewExtension = '.poison.php';
+
+    /* Instance properties */
+
+    private $views_path;
+
+    private $cache_path;
+
+    private $view_extension = '.poison.php';
 
     /**
      * @var array Vars globally accessible for all views
@@ -23,10 +33,14 @@ class Poison
     public function __construct(string $path, string $cache)
     {
         if (!is_null($path))
-            self::$viewsPath = $path;
+            $this->views_path = $path;
+        else
+            $this->views_path = self::$viewsPath;
 
         if (!is_null($cache))
-            self::$cachePath = $cache;
+            $this->cache_path = $cache;
+        else
+            $this->cache_path = self::$cachePath;
     }
 
     /**
@@ -50,13 +64,23 @@ class Poison
     }
 
     /**
-     * Change views extension
+     * Change global views extension
      * @param string $extension View extension in the format ".extension"
      */
     public static function setViewExtension(string $extension): void
     {
         if (!is_null($extension))
             self::$viewExtension = $extension;
+    }
+
+    /**
+     * Change the instance views extension
+     * @param string $extension View extension in the format ".extension"
+     */
+    public function setExtension(string $extension): void
+    {
+        if (!is_null($extension))
+            $this->view_extension = $extension;
     }
 
     /**
@@ -172,7 +196,7 @@ class Poison
 
             endforeach;
 
-            $cachedFile = self::$cachePath . DIRECTORY_SEPARATOR . uniqid("poison.") . '.php';
+            $cachedFile = $this->cache_path . DIRECTORY_SEPARATOR . uniqid("poison.") . '.php';
 
             file_put_contents($cachedFile, $contents);
 
@@ -200,7 +224,7 @@ class Poison
         $this->clearCache();
 
         $view = str_replace('.', DIRECTORY_SEPARATOR, $view);
-        $path = self::$viewsPath . DIRECTORY_SEPARATOR . $view . self::$viewExtension;
+        $path = $this->views_path . DIRECTORY_SEPARATOR . $view . $this->view_extension;
 
         if (file_exists($path)) {
             $output = $this->parseTemplate(file_get_contents($path), $params);
@@ -229,7 +253,7 @@ class Poison
     public function include(string $file): void
     {
         $file = str_replace('.', DIRECTORY_SEPARATOR, $file);
-        $path = self::$viewsPath . DIRECTORY_SEPARATOR . $file . self::$viewExtension;
+        $path = $this->views_path . DIRECTORY_SEPARATOR . $file . $this->view_extension;
 
         if (file_exists($path)) {
             $output = $this->parseTemplate(file_get_contents($path));
