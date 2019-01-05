@@ -88,12 +88,12 @@ class Poison
      */
     private function clearCache(): void
     {
-        $files = scandir(self::$cachePath);
+        $files = scandir($this->cache_path);
 
         if (count($files) >= 8) {
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..')
-                    unlink(self::$cachePath . DIRECTORY_SEPARATOR . $file);
+                    unlink($this->cache_path . DIRECTORY_SEPARATOR . $file);
             }
         }
     }
